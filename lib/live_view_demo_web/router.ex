@@ -18,7 +18,8 @@ defmodule LiveViewDemoWeb.Router do
     pipe_through :browser
 
 #    get "/", PageController, :index
-    live "/", ClockLive
+#    live "/", ClockLive
+    live "/", BoardLive
   end
 
   # Other scopes may use custom stacks.
