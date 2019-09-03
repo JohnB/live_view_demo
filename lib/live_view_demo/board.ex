@@ -12,10 +12,10 @@ defmodule Board do
       width: width,
       height: height,
       start_squares: %{
-        0 => "red", # top-left
-        (width - 1) => "yellow", # top-right
-        (width * height - 1) => "green", # bottom-right
-        (width * (height - 1)) => "blue" # bottom-left
+        top_left_index(width, height) => "red",\
+        top_right_index(width, height) => "yellow",
+        bottom_right_index(width, height) => "green",
+        bottom_left_index(width, height) => "blue"
       },
       board_squares:
         Enum.reduce( 1..(width * height), %{},
@@ -29,5 +29,18 @@ defmodule Board do
           end
         )
     }
+  end
+  
+  def top_left_index(width, height) do 0 end
+  def top_right_index(width, height) do width - 1 end
+  def bottom_right_index(width, height) do width * height - 1 end
+  def bottom_left_index(width, height) do width * (height - 1) end
+  
+  # Return the CSS class(es) that should be applied to this square.
+  def square_class(board = %__MODULE__{start_squares: start_squares, board_squares: board_squares}, square_index) do
+    case start_squares[square_index] do
+      nil -> [board_squares[square_index].base]
+      color -> [color]
+    end
   end
 end

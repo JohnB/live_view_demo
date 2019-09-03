@@ -9,8 +9,7 @@ defmodule LiveViewDemoWeb.BoardLive do
         <%= for y <- 0..(@board.width - 1) do %>
           <tr>
           <%= for x <- 0..(@board.height - 1) do %>
-            <td class="<%= @board.board_squares[@board.width * y + x].base %>">
-              <%= @board.width * y + x %>
+            <td class="<%= Board.square_class(@board, @board.width * y + x) %>">
             </td>
           <% end %>
           </tr>
