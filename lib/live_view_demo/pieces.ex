@@ -3,7 +3,7 @@ defmodule Pieces do
   Encapsulate the shape of each piece, initially in the player's rack
   then later on the board.
 """
-  defstruct [:rack_squares, :width, :height, :currently_selected]
+  defstruct [:rack, :width, :height, :currently_selected, :on_board]
   
   @rack """
     +-------------+
@@ -32,13 +32,33 @@ defmodule Pieces do
     |             |
     +-------------+
 """
-
   def new() do
+    rack_lines = @rack
+      |> String.split(~r/\n/, trim: true)
+      |> Enum.reject(fn line -> String.match?(line, ~r/\+-+\+/) end)
+      |> Enum.map(fn line -> String.replace(line, ~r/^ *\|/, "") end)
+      |> Enum.map(fn line -> String.replace(line, ~r/\|.*$/, "") end)
+    raw_chars = rack_lines
+      |> Enum.join
+      |> String.split(~r//, trim: true)
+    rack_squares = raw_chars
+      |> Enum.with_index
+      |> Enum.reduce(%{}, fn({char, index}, acc) ->
+          case {char, acc[char]} do
+            {" ", _} -> acc
+            {_, nil} -> put_in(acc, [char], [index])
+            {_, value} -> put_in(acc, [char], [index | value])
+          end
+          end)
+    height = Enum.count(rack_lines)
+    width = Enum.count(raw_chars) / height
+
     %__MODULE__{
+      width: width,
+      height: height,
+      rack: rack_squares,
       currently_selected: nil,
-      width: 123,
-      height: 234,
-      rack_squares: %{}
+      on_board: %{}
     }
   end
 end
