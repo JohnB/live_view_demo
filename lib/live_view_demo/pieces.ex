@@ -34,7 +34,7 @@ defmodule Pieces do
     |             |
     +-------------+
 """
-  def new()
+  def new() do
     # Remove the borders, leaving just the set of rack pieces.
     rack_lines = @rack
       |> String.split(~r/\n/, trim: true)
