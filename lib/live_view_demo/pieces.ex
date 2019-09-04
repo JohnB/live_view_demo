@@ -5,6 +5,8 @@ defmodule Pieces do
 """
   defstruct [:rack, :width, :height, :currently_selected, :on_board]
   
+  # This rack layout drives the entire set of pieces.
+  # It is parsed to find the location and shape of each piece.
   @rack """
     +-------------+
     |             |
@@ -32,7 +34,8 @@ defmodule Pieces do
     |             |
     +-------------+
 """
-  def new() do
+  def new()
+    # Remove the borders, leaving just the set of rack pieces.
     rack_lines = @rack
       |> String.split(~r/\n/, trim: true)
       |> Enum.reject(fn line -> String.match?(line, ~r/\+-+\+/) end)
@@ -41,6 +44,10 @@ defmodule Pieces do
     raw_chars = rack_lines
       |> Enum.join
       |> String.split(~r//, trim: true)
+
+    # Track the locations of each individual square that makes up each piece.
+    # Note that the indexes for some squares happen to match printable
+    # characters so the list of arrays appears to contain random text.
     rack_squares = raw_chars
       |> Enum.with_index
       |> Enum.reduce(%{}, fn({char, index}, acc) ->
@@ -58,7 +65,7 @@ defmodule Pieces do
       height: height,
       rack: rack_squares,
       currently_selected: nil,
-      on_board: %{}
+      on_board: %{} # each key will be the piece ID; the values are the locations on the board.
     }
   end
 end
