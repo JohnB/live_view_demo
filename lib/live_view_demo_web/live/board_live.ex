@@ -22,16 +22,34 @@ defmodule LiveViewDemoWeb.BoardLive do
         </tr>
       </table>
       
-    <div>
-      <h2 phx-click="boom">It's <%= strftime!(@date, "%S") %></h2>
-    </div>
+      <table class="rack">
+        <%= for y <- Pieces.row_ids(@rack) do %>
+          <tr>
+          <%= for x <- Pieces.column_ids(@rack) do %>
+            <td class="<%= Pieces.square_class(@rack, x, y) %>">
+            </td>
+          <% end %>
+          </tr>
+        <% end %>
+      </table>
+      <table>
+        <tr>
+          <td>
+          </td>
+        </tr>
+      </table>
+      
+      <div>
+        <h2 phx-click="boom">It's <%= strftime!(@date, "%S") %></h2>
+      </div>
     """
   end
 
   def mount(_session, socket) do
     if connected?(socket), do: :timer.send_interval(1000, self(), :tick)
 
-    {:ok, assign(socket, board: Board.new(), date: :calendar.local_time())}
+    board = Board.new()
+    {:ok, assign(socket, board: board, rack: board.pieces, date: :calendar.local_time())}
   end
 
   def handle_info(:tick, socket) do

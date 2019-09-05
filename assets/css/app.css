@@ -38,6 +38,10 @@
     border: 0px;
 }
 
+.piece-square {
+    background-color: #444444;
+}
+
 .red { background-color: red }
 .green { background-color: green }
 .blue { background-color: blue }
@@ -45,3 +49,4 @@
 .purple { background-color: light-purple }
 .orange { background-color: orange }
 .white { background-color: white }
+.bad { background-color: #FF7777 }

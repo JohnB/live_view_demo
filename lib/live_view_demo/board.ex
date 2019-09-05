@@ -5,7 +5,7 @@ defmodule Board do
   Encapsulate the board position structure, which informs the BoardLive
   UI component.
 """
-  defstruct [:board_squares, :width, :height, :start_squares]
+  defstruct [:board_squares, :width, :height, :start_squares, :pieces]
 
   def new( width \\ 20, height \\ 20, start_style \\ :corners) do
     %__MODULE__{
@@ -27,7 +27,8 @@ defmodule Board do
             }
           )
           end
-        )
+        ),
+      pieces: Pieces.new
     }
   end
   

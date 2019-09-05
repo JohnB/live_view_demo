@@ -3,7 +3,7 @@ defmodule Pieces do
   Encapsulate the shape of each piece, initially in the player's rack
   then later on the board.
 """
-  defstruct [:rack, :width, :height, :currently_selected, :on_board]
+  defstruct [:rack_squares, :width, :height, :currently_selected, :on_board, :raw_chars]
   
   # This rack layout drives the entire set of pieces.
   # It is parsed to find the location and shape of each piece.
@@ -50,22 +50,48 @@ defmodule Pieces do
     # characters so the list of arrays appears to contain random text.
     rack_squares = raw_chars
       |> Enum.with_index
-      |> Enum.reduce(%{}, fn({char, index}, acc) ->
-          case {char, acc[char]} do
-            {" ", _} -> acc
-            {_, nil} -> put_in(acc, [char], [index])
-            {_, value} -> put_in(acc, [char], [index | value])
-          end
+      |> Enum.reduce(%{},
+           fn({char, index}, acc) ->
+            case {char, acc[char]} do
+              {" ", _} -> acc
+              {_, nil} -> put_in(acc, [char], [index])
+              {_, value} -> put_in(acc, [char], [index | value])
+            end
           end)
+          
     height = Enum.count(rack_lines)
-    width = Enum.count(raw_chars) / height
+    width = Kernel.trunc( Enum.count(raw_chars) / height )
 
     %__MODULE__{
       width: width,
       height: height,
-      rack: rack_squares,
+      rack_squares: rack_squares,
       currently_selected: nil,
+      raw_chars: raw_chars,
       on_board: %{} # each key will be the piece ID; the values are the locations on the board.
     }
+  end
+  
+  # Return the CSS class(es) that should be applied to this square.
+  # Simple case: the default rack.
+  def square_class(%Pieces{ raw_chars: raw_chars,
+                            on_board: %{},
+                            currently_selected: nil,
+                            width: width
+                          }, x, y) do
+    square_index = x + y * width
+    case Enum.at(raw_chars, square_index) do
+      " " -> "" # blank
+      nil -> "bad" # blank
+      _ -> "piece-square" # some portion of a piece
+    end
+  end
+  
+  def column_ids(%__MODULE__{width: width}) do
+    (0..(width - 1))
+  end
+  
+  def row_ids(%__MODULE__{height: height}) do
+    (0..(height - 1))
   end
 end
