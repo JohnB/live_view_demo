@@ -5,7 +5,7 @@ defmodule LiveViewDemoWeb.BoardLive do
 
   def render(assigns) do
     ~L"""
-      <table><tr><td class="rack-container">
+      <table class="game-container"><tr><td class="rack-container">
         <table class="rack">
           <%= for y <- Pieces.row_ids(@rack) do %>
             <tr>

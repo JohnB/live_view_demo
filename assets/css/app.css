@@ -3,25 +3,29 @@
 @import "./phoenix.css";
 @import "../../deps/phoenix_live_view/assets/css/live_view.css";
 
+.game-container {
+    width: unset;
+}
+
 .board {
-    width: 400px;
+    width: 300px;
     border: 1px solid black;
     float: left;
     margin-right: 1em;
 }
 
 .board td {
-    width: 20px;
-    min-width: 20px;
-    height: 20px;
-    min-height: 20px;
+    width: 15px;
+    min-width: 15px;
+    height: 15px;
+    min-height: 15px;
     padding: 0;
     margin: 0;
     border: 0px;
 }
 
 .rack {
-    width: 104px;
+    width: 78px;
     border: 1px solid black;
     margin-right: 15px;
 }
@@ -32,10 +36,10 @@
     vertical-align: baseline;
 }
 .rack td {
-    width: 8px;
-    min-width: 8px;
-    height: 8px;
-    min-height: 8px;
+    width: 6px;
+    min-width: 6px;
+    height: 6px;
+    min-height: 6px;
     padding: 0;
     margin: 0;
     border: 0px;
