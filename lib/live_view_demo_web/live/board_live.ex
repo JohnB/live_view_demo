@@ -5,40 +5,42 @@ defmodule LiveViewDemoWeb.BoardLive do
 
   def render(assigns) do
     ~L"""
-      <table class="board">
-        <%= for y <- 0..(@board.width - 1) do %>
-          <tr>
-          <%= for x <- 0..(@board.height - 1) do %>
-            <td class="<%= Board.square_class(@board, @board.width * y + x) %>">
-            </td>
+      <table><tr><td>
+        <table class="rack">
+          <%= for y <- Pieces.row_ids(@rack) do %>
+            <tr>
+            <%= for x <- Pieces.column_ids(@rack) do %>
+              <td class="<%= Pieces.square_class(@rack, x, y) %>">
+              </td>
+            <% end %>
+            </tr>
           <% end %>
-          </tr>
-        <% end %>
-      </table>
-      <table>
-        <tr>
-          <td>
-          </td>
-        </tr>
-      </table>
-      
-      <table class="rack">
-        <%= for y <- Pieces.row_ids(@rack) do %>
+        </table>
+        <table>
           <tr>
-          <%= for x <- Pieces.column_ids(@rack) do %>
-            <td class="<%= Pieces.square_class(@rack, x, y) %>">
+            <td>
             </td>
-          <% end %>
           </tr>
-        <% end %>
-      </table>
-      <table>
-        <tr>
-          <td>
-          </td>
-        </tr>
-      </table>
-      
+        </table>
+      </td><td>
+        <table class="board">
+          <%= for y <- 0..(@board.width - 1) do %>
+            <tr>
+            <%= for x <- 0..(@board.height - 1) do %>
+              <td class="<%= Board.square_class(@board, @board.width * y + x) %>">
+              </td>
+            <% end %>
+            </tr>
+          <% end %>
+        </table>
+        <table>
+          <tr>
+            <td>
+            </td>
+          </tr>
+        </table>
+      </td></tr></table>
+
       <div>
         <h2 phx-click="boom">It's <%= strftime!(@date, "%S") %></h2>
       </div>
