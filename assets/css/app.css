@@ -28,6 +28,9 @@
 .rack-left {
     float: left;
 }
+.rack-container {
+    vertical-align: baseline;
+}
 .rack td {
     width: 8px;
     min-width: 8px;
