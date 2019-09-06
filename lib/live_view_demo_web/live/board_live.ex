@@ -18,25 +18,19 @@ defmodule LiveViewDemoWeb.BoardLive do
         </table>
       </td><td class="board-container">
         <table class="board">
-          <%= for y <- 0..(@board.width - 1) do %>
+          <%= for y <- 0..(@board.height - 1) do %>
             <tr>
-            <%= for x <- 0..(@board.height - 1) do %>
+            <%= for x <- 0..(@board.width - 1) do %>
               <td class="<%= Board.square_class(@board, @board.width * y + x) %>">
               </td>
             <% end %>
             </tr>
           <% end %>
         </table>
-        <table>
-          <tr>
-            <td>
-            </td>
-          </tr>
-        </table>
       </td></tr></table>
 
       <div>
-        <h2 phx-click="boom">It's <%= strftime!(@date, "%S") %></h2>
+        <h2 phx-click="boom"><%= @board.width %>x<%= @board.height %> at <%= strftime!(@date, "%S") %></h2>
       </div>
     """
   end
