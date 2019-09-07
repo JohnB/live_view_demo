@@ -11,8 +11,8 @@ defmodule LiveViewDemoWeb.BoardLive do
         <%= for y <- Pieces.row_ids(@rack) do %>
           <%= for x <- Pieces.column_ids(@rack) do %>
             <span
-              phx-click="rack_click"
-              phx-value="<%= x + y * @board.width %>"
+              <%= Pieces.click(@rack, x, y) %>
+              <%= Pieces.value(@rack, x, y) %>
               class="<%= Pieces.square_class(@rack, x, y) %>"
             ></span>
           <% end %>
@@ -30,7 +30,11 @@ defmodule LiveViewDemoWeb.BoardLive do
       </span>
 
       <div>
-        <h2 phx-click="boom"><%= @board.width %>x<%= @board.height %> at <%= strftime!(@date, "%S") %></h2>
+        <h2 phx-click="boom">
+          <%= @board.width %>x<%= @board.height %>
+          (<%= @board.width %>x<%= @board.height %>)
+          at <%= strftime!(@date, "%S") %><
+        /h2>
       </div>
     """
   end
@@ -43,6 +47,11 @@ defmodule LiveViewDemoWeb.BoardLive do
   end
 
   def handle_info(:tick, socket) do
+    {:noreply, put_date(socket)}
+  end
+
+  def handle_event("\"rack-click\"", value, socket) do
+    IO.puts value
     {:noreply, put_date(socket)}
   end
 

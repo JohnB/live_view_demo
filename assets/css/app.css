@@ -7,12 +7,13 @@
 }
 
 .rack-container {
-    width: 140px;
-    height: 240px;
-    border: 1px dashed black;
+    width: 132px;
+    height: 232px;
+    border: 1px solid #222222;
     display: inherit;
     float: left;
     margin: 0 1em 0 0;
+    background-color: #eeeeff;
 }
 
 .rack-container span {
@@ -35,6 +36,7 @@
     border: 1px solid black;
     float: left;
     margin-right: 1em;
+    background-color: #f0f0f0;
 }
 
 .board span {
