@@ -4,17 +4,40 @@
 @import "../../deps/phoenix_live_view/assets/css/live_view.css";
 
 .game-container {
-    width: unset;
 }
 
-.board {
+.rack-container {
+    width: 140px;
+    height: 240px;
+    border: 1px dashed black;
+    display: inherit;
+    float: left;
+    margin: 0 1em 0 0;
+}
+
+.rack-container span {
+    width: 10px;
+    padding: 0 0 10px;
+    display: block;
+    float: left;
+}
+
+.board20 span {
+    width: 5%;
+    padding: 0 0 5%;
+    display: block;
+    float: left;
+    margin: 0;
+}
+
+.board-container {
     width: 300px;
     border: 1px solid black;
     float: left;
     margin-right: 1em;
 }
 
-.board td {
+.board span {
     width: 15px;
     min-width: 15px;
     height: 15px;

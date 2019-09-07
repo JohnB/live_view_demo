@@ -5,29 +5,29 @@ defmodule LiveViewDemoWeb.BoardLive do
 
   def render(assigns) do
     ~L"""
-      <table class="game-container"><tr><td class="rack-container">
-        <table class="rack">
-          <%= for y <- Pieces.row_ids(@rack) do %>
-            <tr>
-            <%= for x <- Pieces.column_ids(@rack) do %>
-              <td class="<%= Pieces.square_class(@rack, x, y) %>">
-              </td>
-            <% end %>
-            </tr>
+      <style>
+      </style>
+      <span class="rack-container">
+        <%= for y <- Pieces.row_ids(@rack) do %>
+          <%= for x <- Pieces.column_ids(@rack) do %>
+            <span
+              phx-click="rack_click"
+              phx-value="<%= x + y * @board.width %>"
+              class="<%= Pieces.square_class(@rack, x, y) %>"
+            ></span>
           <% end %>
-        </table>
-      </td><td class="board-container">
-        <table class="board">
-          <%= for y <- 0..(@board.height - 1) do %>
-            <tr>
-            <%= for x <- 0..(@board.width - 1) do %>
-              <td class="<%= Board.square_class(@board, @board.width * y + x) %>">
-              </td>
-            <% end %>
-            </tr>
-          <% end %>
-        </table>
-      </td></tr></table>
+        <% end %>
+      </span>
+
+      <span class="board-container board20">
+        <%= for {square, index} <- Enum.with_index(@board.board_squares) do %>
+          <span
+            phx-click="click"
+            phx-value="<%= index %>"
+            class="<%= Board.square_class(@board, index) %>"
+          ></span>
+        <% end %>
+      </span>
 
       <div>
         <h2 phx-click="boom"><%= @board.width %>x<%= @board.height %> at <%= strftime!(@date, "%S") %></h2>

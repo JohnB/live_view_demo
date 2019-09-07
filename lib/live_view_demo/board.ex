@@ -7,7 +7,7 @@ defmodule Board do
 """
   defstruct [:board_squares, :width, :height, :start_squares, :pieces]
 
-  def new( width \\ Enum.random(18..22), height \\ Enum.random(18..22), start_style \\ :corners) do
+  def new( width \\ default_width, height \\ default_height, start_style \\ :corners) do
     %__MODULE__{
       width: width,
       height: height,
@@ -32,6 +32,12 @@ defmodule Board do
     }
   end
   
+  def default_width() do
+    20 # Enum.random(18..22)
+  end
+  def default_height() do
+    20 # Enum.random(18..22)
+  end
   def top_left_index(_width, _height) do 0 end
   def top_right_index(width, _height) do width - 1 end
   def bottom_right_index(width, height) do width * height - 1 end
