@@ -7,7 +7,7 @@ defmodule Board do
 """
   defstruct [:board_squares, :width, :height, :start_squares, :pieces]
 
-  def new( width \\ default_width, height \\ default_height, start_style \\ :corners) do
+  def new( width \\ default_width(), height \\ default_height(), _start_style \\ :corners) do
     %__MODULE__{
       width: width,
       height: height,
@@ -44,7 +44,7 @@ defmodule Board do
   def bottom_left_index(width, height) do width * (height - 1) end
   
   # Return the CSS class(es) that should be applied to this square.
-  def square_class(board = %__MODULE__{start_squares: start_squares, board_squares: board_squares}, square_index) do
+  def square_class(%__MODULE__{start_squares: start_squares, board_squares: board_squares}, square_index) do
     case start_squares[square_index] do
       nil -> [board_squares[square_index].base]
       color -> [color]

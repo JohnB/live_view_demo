@@ -1,6 +1,6 @@
 defmodule LiveViewDemoWeb.BoardLive do
   use Phoenix.LiveView
-  import Board
+#  import Board
   import Calendar.Strftime
 
   def render(assigns) do
@@ -20,7 +20,7 @@ defmodule LiveViewDemoWeb.BoardLive do
       </span>
 
       <span class="board-container board20">
-        <%= for {square, index} <- Enum.with_index(@board.board_squares) do %>
+        <%= for {_square, index} <- Enum.with_index(@board.board_squares) do %>
           <span
             phx-click="click"
             phx-value="<%= index %>"
