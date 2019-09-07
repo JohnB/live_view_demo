@@ -106,6 +106,21 @@ defmodule Pieces do
       _ -> "piece-square" # some portion of a piece
     end
   end
+  # Return the CSS class(es) that should be applied to this square.
+  # Less simple case: something selected, but nothing on board.
+  def square_class(%Pieces{ raw_chars: raw_chars,
+                            on_board: %{},
+                            currently_selected: currently_selected,
+                            width: width
+                          }, x, y) do
+    square_index = x + y * width
+    case {Enum.at(raw_chars, square_index), currently_selected} do
+      {ch, ch} -> "" # don't show the select piece
+      {" ", _} -> "" # blank
+      {nil, _} -> "bad" # blank
+      {_a, _b} -> "piece-square" # some portion of a piece
+    end
+  end
   
   def column_ids(%__MODULE__{width: width}) do
     (0..(width - 1))

@@ -51,8 +51,13 @@ defmodule LiveViewDemoWeb.BoardLive do
   end
 
   def handle_event("\"rack-click\"", value, socket) do
+    %{rack: rack, board: board} = socket.assigns
+    rack = %Pieces{rack | currently_selected: String.at(value, 1)}
+    board = %Board{board | pieces: rack}
+
     IO.puts value
-    {:noreply, put_date(socket)}
+    IO.puts inspect(board)
+    {:noreply, assign(socket, board: board, rack: rack, date: :calendar.local_time())}
   end
 
   defp put_date(socket) do
