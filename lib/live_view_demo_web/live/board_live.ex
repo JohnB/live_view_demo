@@ -6,6 +6,13 @@ defmodule LiveViewDemoWeb.BoardLive do
   def render(assigns) do
     ~L"""
       <style>
+        .board<%= @board.width %> span {
+          width: <%= 100.0 / @board.width %>%;
+          padding: 0 0 <%= 100.0 / @board.width %>%;
+          display: block;
+          float: left;
+          margin: 0;
+        }
       </style>
       <span class="rack-container">
         <%= for y <- Pieces.row_ids(@rack) do %>
@@ -19,7 +26,7 @@ defmodule LiveViewDemoWeb.BoardLive do
         <% end %>
       </span>
 
-      <span class="board-container board20">
+      <span class="board-container board<%= @board.width %>">
         <%= for {_square, index} <- Enum.with_index(@board.board_squares) do %>
           <span
             phx-click="click"
@@ -33,8 +40,8 @@ defmodule LiveViewDemoWeb.BoardLive do
         <h2 phx-click="boom">
           <%= @board.width %>x<%= @board.height %>
           (<%= @board.width %>x<%= @board.height %>)
-          at <%= strftime!(@date, "%S") %><
-        /h2>
+          at <%= strftime!(@date, "%S") %>
+        </h2>
       </div>
     """
   end
@@ -52,7 +59,11 @@ defmodule LiveViewDemoWeb.BoardLive do
 
   def handle_event("\"rack-click\"", value, socket) do
     %{rack: rack, board: board} = socket.assigns
-    rack = %Pieces{rack | currently_selected: String.at(value, 1)}
+    piece_index = String.at(value, 1)
+    # piece_hash = %{piece_index => Piece.on_board(piece_index)
+    #rack = %Pieces{rack | currently_selected: piece_hash}
+    
+    rack = %Pieces{rack | currently_selected: piece_index}
     board = %Board{board | pieces: rack}
 
     IO.puts value
