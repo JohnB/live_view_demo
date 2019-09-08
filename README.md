@@ -11,6 +11,22 @@ that I can experiment with the UI without having to design the
  eventual persistence layer. This, and the lack of any time spent on
  tests, has allowed me to iterate incredibly quickly on the UI.
   
+## Roadmap
+As of 9019-09-07 (not necessarily in order):
+* [x] Allow selecting a piece in the rack, making it disappear from the rack.
+* [ ] Show the piece "hovering" over the board
+* [ ] Allow the piece to be placed on the board (and only on the board).
+* [ ] Add flipping and rotations before final placement.
+* [ ] Milestone: MVP for Phrenzy entry, future steps are gravy.
+* [ ] Encapsulate PentominoGames and Players and Moves into genservers.
+* [ ] Restructure boards and pieces to match.
+* [ ] Define the rule structure: turns, valid moves, how the game ends.
+* [ ] Spin up a new game for every 4 connections (how? game manager?).
+* [ ] Add a practice mode for when waiting for a 4th player.
+* [ ] *Persist* game state and reload it on restart.
+* [ ] 
+* [ ] 
+
 ## Bottlenecks
 ### 9019-09-07: Data Modeling Goofs
 Maybe the lack of persistence allows me to rush too quickly. 

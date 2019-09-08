@@ -33,10 +33,10 @@ defmodule Board do
   end
   
   def default_width() do
-    20 # Enum.random(18..22)
+    21 # Enum.random([18,19,21,22])
   end
   def default_height() do
-    20 # Enum.random(18..22)
+    19 # Enum.random([18,19,21,22])
   end
   def top_left_index(_width, _height) do 0 end
   def top_right_index(width, _height) do width - 1 end
