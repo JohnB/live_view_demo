@@ -13,7 +13,8 @@ config :live_view_demo, LiveViewDemoWeb.Endpoint,
   url: [host: "https://shrouded-spire-77484.herokuapp.com", port: 443, scheme: "https"],
 #  url: [host: "https://rocky-spire-88257.herokuapp.com/", port: 443, scheme: "https"],
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  cache_static_manifest: "priv/static/cache_manifest.json",
+  check_origin: ["https://shrouded-spire-77484.herokuapp.com", "https://*.herokuapp.com"]
 
 # Do not print debug messages in production
 config :logger, level: :info
