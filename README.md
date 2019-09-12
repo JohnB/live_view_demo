@@ -14,8 +14,16 @@ that I can experiment with the UI without having to design the
 ## Roadmap
 As of 9019-09-07 (not necessarily in order):
 * [x] Allow selecting a piece in the rack, making it disappear from the rack.
-* [ ] Show the piece "hovering" over the board
 * [ ] Allow the piece to be placed on the board (and only on the board).
+* [ ] Milestone: MVP for Phrenzy entry, future steps are gravy.
+* [ ] Refactor so every event handler is a one-line call to a single model:
+  * [ ] PentominoArcade.add_player_to_open_game(socket)
+  * [ ] PieceOverBoard.pick_up(socket_assigns, piece_id)
+  * [ ] PieceOverBoard.rotate(socket_assigns, direction)
+  * [ ] PieceOverBoard.flip(socket_assigns, direction)
+  * [ ] PieceOverBoard.place(socket_assigns)
+  * [ ] PieceOverBoard.valid_placement?(socket) would enable the UI button.
+* [ ] Show the piece "hovering" over the board
 * [ ] Add flipping and rotations before final placement.
 * [ ] Milestone: MVP for Phrenzy entry, future steps are gravy.
 * [ ] Encapsulate PentominoGames and Players and Moves into genservers.
@@ -24,24 +32,56 @@ As of 9019-09-07 (not necessarily in order):
 * [ ] Spin up a new game for every 4 connections (how? game manager?).
 * [ ] Add a practice mode for when waiting for a 4th player.
 * [ ] *Persist* game state and reload it on restart.
-* [ ] 
-* [ ] 
 
+## Learnings
+### 9019-09-07: What good LiveView code looks like.
+(disclaimer: the code in _this_ repo does not match my learnings yet)
+* All event handlers should be a one-line call to a single model:
+  * PentominoGame.needing_players(socket)
+ 
 ## Bottlenecks
 ### 9019-09-07: Data Modeling Goofs
 Maybe the lack of persistence allows me to rush too quickly. 
 In my haste I've created some awkward internal data cleavings -
 but I think they're fixable. 
+(this is referring to board, pieces and board_live code at commit #b1fa2cb)
 I'm looking forward to refactoring as I go. I have a sense it will
 be even easier than ruby, once I get the hang of it.
 
-### 9019-09-07: Deployment Sorrows
-I have misconfigured something on Heroku such that socket connections
-appear to be coming from the wrong domain and are being rejected 
-(correctly, I think, since we should _not_ accept sockets from other
-domains - but I don't see where it is misconfigured). I'll sort it
-with support soon 
-(and plan to _pay_ them for a dyno or two - well worth it).
+### SOLVED: Deployment Buildpack Ordering
+I had one problem and then I fiddled with random stuff to try to fix it,
+and soon had multiple problems.
+One follow-on problem was that I tried switching buildpacks 
+and accidentally reversed the two we need and found that order matters.
+The wrong order caused builds to fail with two consistent error messages:
+* `mix: command not found`
+* `Push rejected, failed to compile Phoenix app.`
+This was fixed by reversing the order of the buildpacks. 
+
+Here is the correct ordering of your `heroku buildpacks` output:
+```
+=== shrouded-spire-77484 Buildpack URLs
+1. https://github.com/HashNuke/heroku-buildpack-elixir.git
+2. https://github.com/gjaldon/heroku-buildpack-phoenix-static.git`
+```
+
+### SOLVED: Client was Unable to Connect a Websocket
+This was the original socket problem, where the browser would display
+the initial HTML and data and then "fuzz out" (a light gray) 
+and be unresponsive.
+
+`heroku logs` showed that the server was getting the same error
+over and over again:
+```
+Could not check origin for Phoenix.Socket transport.
+```
+
+This was solved 
+[via stackoverflow](https://stackoverflow.com/questions/43188260/how-to-fix-error-could-not-check-origin-for-phoenix-socket-transport-phoenix/43188390)
+by adding this line to `onfig/prod.exs` to allow the connection:
+```
+check_origin: ["https://shrouded-spire-77484.herokuapp.com"]
+```
 
 ## Phoenix Phrenzy
 This ~is~ _will soon be_ my entry in [Phoenix Phrenzy](https://phoenixphrenzy.com), 
