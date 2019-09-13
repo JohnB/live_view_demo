@@ -17,11 +17,11 @@ defmodule LiveViewDemoWeb.BoardLive do
       <span class="rack-container">
         <%= for y <- Pieces.row_ids(@rack) do %>
           <%= for x <- Pieces.column_ids(@rack) do %>
-            <span
+            <a href="#"
               <%= Pieces.click(@rack, x, y) %>
               <%= Pieces.value(@rack, x, y) %>
               class="<%= Pieces.square_class(@rack, x, y) %>"
-            ></span>
+            ></a>
           <% end %>
         <% end %>
       </span>
