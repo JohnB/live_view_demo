@@ -115,9 +115,8 @@ defmodule Pieces do
                           }, x, y) do
     square_index = x + y * width
     case {Enum.at(raw_chars, square_index), currently_selected} do
-      {ch, ch} -> "" # don't show the select piece
+      {ch, ch} -> "selected-piece" # don't show the select piece
       {" ", _} -> "" # blank
-      {nil, _} -> "bad" # blank
       {_a, _b} -> "piece-square" # some portion of a piece
     end
   end

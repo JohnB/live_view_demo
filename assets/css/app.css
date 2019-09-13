@@ -71,7 +71,11 @@
 }
 
 .piece-square {
-    background-color: #444444;
+    background-color: #443333;
+}
+
+.selected-piece {
+    background-color: #ff8888;
 }
 
 .red { background-color: red }
