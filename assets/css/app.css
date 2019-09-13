@@ -16,7 +16,8 @@
     background-color: #eeeeff;
 }
 
-.rack-container span {
+/* Rack squares are an a(nchor) instead of span so that click events bubble up correctly on iOS */
+.rack-container a {
     width: 10px;
     padding: 0 0 10px;
     display: block;
