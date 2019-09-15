@@ -7,8 +7,8 @@
 }
 
 .rack-container {
-    width: 132px;
-    height: 232px;
+    width: 145px;
+    height: 255px;
     border: 1px solid #222222;
     display: inherit;
     float: left;
@@ -18,19 +18,19 @@
 
 /* Rack squares are an a(nchor) instead of span so that click events bubble up correctly on iOS */
 .rack-container a {
-    width: 10px;
-    padding: 0 0 10px;
+    width: 11px;
+    padding: 0 0 11px;
     display: block;
     float: left;
 }
 
-.board20 span {
-    width: 5%;
-    padding: 0 0 5%;
-    display: block;
-    float: left;
-    margin: 0;
-}
+/*.board20 span {*/
+    /*width: 5%;*/
+    /*padding: 0 0 5%;*/
+    /*display: block;*/
+    /*float: left;*/
+    /*margin: 0;*/
+/*}*/
 
 .board-container {
     width: 300px;
