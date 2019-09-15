@@ -38,26 +38,19 @@ defmodule LiveViewDemoWeb.BoardLive do
         <% end %>
       </span>
 
-      <div>
-        <h2 phx-click="boom">
-          <%= @board.width %>x<%= @board.height %>
-          (<%= @board.width %>x<%= @board.height %>)
-          at <%= strftime!(@date, "%S") %>
-        </h2>
-      </div>
     """
   end
 
   def mount(_session, socket) do
-    if connected?(socket), do: :timer.send_interval(1000, self(), :tick)
+#    if connected?(socket), do: :timer.send_interval(1000, self(), :tick)
 
     board = Board.new()
-    {:ok, assign(socket, board: board, rack: board.pieces, date: :calendar.local_time())}
+    {:ok, assign(socket, board: board, rack: board.pieces)}
   end
   
-  def handle_info(:tick, socket) do
-    {:noreply, put_date(socket)}
-  end
+#  def handle_info(:tick, socket) do
+#    {:noreply, socket}
+#  end
 
   def handle_event("click", value, socket) do
     IO.puts("Board clicked at position #{value}.")
@@ -81,15 +74,11 @@ defmodule LiveViewDemoWeb.BoardLive do
     board = %Board{board | pieces: rack}
     IO.puts inspect(board)
 
-    {:noreply, assign(socket, board: board, rack: rack, date: :calendar.local_time())}
+    {:noreply, assign(socket, board: board, rack: rack)}
   end
 
   def handle_event(event, value, socket) do
     IO.puts("DEFAULT handle_event(#{event}, #{value}...).")
     {:noreply, socket}
-  end
-
-  defp put_date(socket) do
-    assign(socket, date: :calendar.local_time())
   end
 end
