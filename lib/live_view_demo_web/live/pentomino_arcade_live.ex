@@ -6,9 +6,11 @@ defmodule LiveViewDemoWeb.PentominoArcadeLive do
 
   def render(assigns) do
     ~L"""
-      <button phx-click='start_or_join_game' >
-        PLAY
-      </button>
+      <a href="/game" >
+        <button phx-click='start_or_join_game' >
+          PLAY
+        </button>
+      </a >
       
       <span class="games-container">
         <%= for game <- PentominoArcade.current_games(4) do %>
@@ -22,12 +24,12 @@ defmodule LiveViewDemoWeb.PentominoArcadeLive do
     {:ok, socket}
   end
 
-  def handle_event("start_or_join_game", _value, socket) do
-    IO.puts "event: start_or_join_game"
-    IO.puts socket.id
-
-    _game = PentominoArcade.start_or_join_game()
-
-    {:noreply, live_redirect(socket, to: Routes.live_path(socket, LiveViewDemoWeb.BoardLive))}
-  end
+  # def handle_event("start_or_join_game", _value, socket) do
+  #   IO.puts "event: start_or_join_game"
+  #   IO.puts socket.id
+  #
+  #   _game = PentominoArcade.start_or_join_game()
+  #
+  #   {:noreply, live_redirect(socket, to: Routes.live_path(socket, LiveViewDemoWeb.BoardLive))}
+  # end
 end
