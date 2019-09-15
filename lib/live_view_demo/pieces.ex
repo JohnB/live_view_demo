@@ -74,20 +74,13 @@ defmodule Pieces do
   
   # TODO: refactor the duplication here - maybe just take the square_index as a param
   def click(%Pieces{ raw_chars: raw_chars, width: width}, x, y) do
-    square_index = x + y * width
-    case Enum.at(raw_chars, square_index) do
-      " " -> "" # blank
-      "" -> "" # blank
-      nil -> "badclick" # blank
-      _ -> ~s(phx-click="rack-click")
-    end
+    ~s(phx-click="rack-click")
   end
 
   def value(%Pieces{ raw_chars: raw_chars, width: width}, x, y) do
     square_index = x + y * width
     case Enum.at(raw_chars, square_index) do
-      " " -> "" # blank
-      nil -> "bad" # blank
+      nil -> ~s(phx-value=".")
       value -> ~s(phx-value="#{ value }")
     end
   end

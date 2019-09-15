@@ -58,7 +58,14 @@ defmodule LiveViewDemoWeb.BoardLive do
     {:noreply, put_date(socket)}
   end
 
+  def handle_event("\"rack-click\"", value = ".", socket) do
+    {:noreply, socket}
+  end
+
   def handle_event("\"rack-click\"", value, socket) do
+    IO.puts "value"
+    IO.puts value
+
     %{rack: rack, board: board} = socket.assigns
     piece_index = String.at(value, 1)
     # piece_hash = %{piece_index => Piece.on_board(piece_index)
@@ -66,9 +73,8 @@ defmodule LiveViewDemoWeb.BoardLive do
     
     rack = %Pieces{rack | currently_selected: piece_index}
     board = %Board{board | pieces: rack}
-
-    IO.puts value
     IO.puts inspect(board)
+
     {:noreply, assign(socket, board: board, rack: rack, date: :calendar.local_time())}
   end
 
