@@ -1,17 +1,17 @@
 defmodule LiveViewDemoWeb.PentominoArcadeLive do
   use Phoenix.LiveView
-  import PentominoArcade
-  import LiveViewDemoWeb.BoardLive
+#  import PentominoArcade
+#  import LiveViewDemoWeb.BoardLive
   alias LiveViewDemoWeb.Router.Helpers, as: Routes
 
   def render(assigns) do
     ~L"""
       <button phx-click='start_or_join_game' >
-        <%= PentominoArcade.call_to_action(@pentomino_arcade) %>
+        <%= PentominoArcade.call_to_action() %>
       </button>
       
       <span class="games-container">
-        <%= for game <- PentominoArcade.current_games(@pentomino_arcade) do %>
+        <%= for game <- PentominoArcade.current_games(4) do %>
           <%= PentominoArcade.show_game(game) %>
         <% end %>
       </span>
@@ -19,15 +19,14 @@ defmodule LiveViewDemoWeb.PentominoArcadeLive do
   end
 
   def mount(_session, socket) do
-    pentomino_arcade = PentominoArcade.new()
-    {:ok, assign(socket, pentomino_arcade: pentomino_arcade)}
+    {:ok, socket}
   end
 
-  def handle_event("start_or_join_game", value, socket) do
+  def handle_event("start_or_join_game", _value, socket) do
     IO.puts "event: start_or_join_game"
+    IO.puts socket.id
 
-    %{pentomino_arcade: pentomino_arcade} = socket.assigns
-    game = PentominoArcade.start_or_join_game(pentomino_arcade)
+    _game = PentominoArcade.start_or_join_game()
 
     {:noreply, live_redirect(socket, to: Routes.live_path(socket, LiveViewDemoWeb.BoardLive))}
   end
