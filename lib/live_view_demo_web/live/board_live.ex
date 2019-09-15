@@ -52,6 +52,10 @@ defmodule LiveViewDemoWeb.BoardLive do
     board = Board.new()
     {:ok, assign(socket, board: board, rack: board.pieces, date: :calendar.local_time())}
   end
+  
+  def handle_params(_params, _uri, socket) do
+    {:noreply, socket}
+  end
 
   def handle_info(:tick, socket) do
     {:noreply, put_date(socket)}
