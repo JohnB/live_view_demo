@@ -7,7 +7,7 @@ defmodule LiveViewDemoWeb.PentominoArcadeLive do
   def render(assigns) do
     ~L"""
       <button phx-click='start_or_join_game' >
-        <%= PentominoArcade.call_to_action() %>
+        PLAY
       </button>
       
       <span class="games-container">

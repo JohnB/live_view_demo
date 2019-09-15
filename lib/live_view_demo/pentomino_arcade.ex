@@ -16,11 +16,6 @@ defmodule PentominoArcade do
     end
   end
     
-  def call_to_action() do
-    {:ok, pid} = __MODULE__.start_link()
-    GenServer.call(pid, {:call_to_action})
-  end
-
   def start_or_join_game() do
     {:ok, pid} = __MODULE__.start_link()
     GenServer.call(pid, {:start_or_join_game})
@@ -55,9 +50,4 @@ defmodule PentominoArcade do
     {:reply, Enum.slice(state.games, 0, max_games), state}
   end
   
-  def handle_call({:call_to_action}, _, state) do
-    # TODO: check needs_player to decide to join
-    {:reply, Enum.random(["Start Game", "Join Game"]), state}
-  end
-
 end
