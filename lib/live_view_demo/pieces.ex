@@ -74,7 +74,7 @@ defmodule Pieces do
   
   # TODO: refactor the duplication here - maybe just take the square_index as a param
   def click(%Pieces{ raw_chars: raw_chars, width: width}, x, y) do
-    ~s(phx-click="rack-click")
+    ~s(phx-click=rack-click)
   end
 
   def value(%Pieces{ raw_chars: raw_chars, width: width}, x, y) do

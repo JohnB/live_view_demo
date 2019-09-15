@@ -15,6 +15,17 @@ defmodule LiveViewDemoWeb.BoardLive do
           margin: 0;
         }
       </style>
+
+      <span class="board-container board<%= @board.width %>">
+        <%= for {_square, index} <- Enum.with_index(@board.board_squares) do %>
+          <span
+            phx-click="click"
+            phx-value="<%= index %>"
+            class="<%= Board.square_class(@board, index) %>"
+          ></span>
+        <% end %>
+      </span>
+
       <span class="rack-container">
         <%= for y <- Pieces.row_ids(@rack) do %>
           <%= for x <- Pieces.column_ids(@rack) do %>
@@ -24,16 +35,6 @@ defmodule LiveViewDemoWeb.BoardLive do
               class="<%= Pieces.square_class(@rack, x, y) %>"
             ></a>
           <% end %>
-        <% end %>
-      </span>
-
-      <span class="board-container board<%= @board.width %>">
-        <%= for {_square, index} <- Enum.with_index(@board.board_squares) do %>
-          <span
-            phx-click="click"
-            phx-value="<%= index %>"
-            class="<%= Board.square_class(@board, index) %>"
-          ></span>
         <% end %>
       </span>
 
@@ -58,11 +59,16 @@ defmodule LiveViewDemoWeb.BoardLive do
     {:noreply, put_date(socket)}
   end
 
-  def handle_event("\"rack-click\"", value = ".", socket) do
+  def handle_event("click", value, socket) do
+    IO.puts("Board clicked at position #{value}.")
     {:noreply, socket}
   end
 
-  def handle_event("\"rack-click\"", value, socket) do
+  def handle_event("rack-click", value = ".", socket) do
+    {:noreply, socket}
+  end
+
+  def handle_event("rack-click", value, socket) do
     IO.puts "value"
     IO.puts value
 
@@ -76,6 +82,11 @@ defmodule LiveViewDemoWeb.BoardLive do
     IO.puts inspect(board)
 
     {:noreply, assign(socket, board: board, rack: rack, date: :calendar.local_time())}
+  end
+
+  def handle_event(event, value, socket) do
+    IO.puts("DEFAULT handle_event(#{event}, #{value}...).")
+    {:noreply, socket}
   end
 
   defp put_date(socket) do
