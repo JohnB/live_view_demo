@@ -1,7 +1,6 @@
 defmodule LiveViewDemoWeb.PentominoArcadeLive do
   use Phoenix.LiveView
-#  import PentominoArcade
-#  import LiveViewDemoWeb.BoardLive
+  import PentominoArcade
   alias LiveViewDemoWeb.Router.Helpers, as: Routes
 
   def render(assigns) do

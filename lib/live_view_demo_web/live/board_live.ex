@@ -1,6 +1,7 @@
 defmodule LiveViewDemoWeb.BoardLive do
   use Phoenix.LiveView
-#  import Board
+  import Board
+  import Pieces
   import Calendar.Strftime
 
   def render(assigns) do
@@ -53,10 +54,6 @@ defmodule LiveViewDemoWeb.BoardLive do
     {:ok, assign(socket, board: board, rack: board.pieces, date: :calendar.local_time())}
   end
   
-  def handle_params(_params, _uri, socket) do
-    {:noreply, socket}
-  end
-
   def handle_info(:tick, socket) do
     {:noreply, put_date(socket)}
   end
