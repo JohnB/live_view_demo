@@ -41,9 +41,12 @@ defmodule LiveViewDemoWeb.BoardLive do
   def mount(session, socket) do
 #    if connected?(socket), do: :timer.send_interval(1000, self(), :tick)
 
-    %{"game_id" => game_id} = session.path_params
+    game_id = Map.get(session.path_params, "game_id")
     game = PentominoArcade.find_game(game_id)
-    {:ok, assign(socket, board: game.board, rack: game.board.pieces)}
+    case game do
+      nil -> {:ok, socket} # TODO: figure out the correct action here
+      _ -> {:ok, assign(socket, board: game.board, rack: game.board.pieces)}
+    end
   end
   
 #  def handle_info(:tick, socket) do
