@@ -3,13 +3,13 @@ defmodule PentominoGame do
   Manage one pentomino game.
 """
 
-  defstruct [:id, :players, :game_board]
+  defstruct [:id, :players, :board]
 
   def new(player_id) do
     %__MODULE__{
       id: "#{:rand.uniform(999999)}", # TODO: a better ID, such as one from Ecto
       players: [player_id],
-      game_board: []
+      board: Board.new()
     }
   end
   

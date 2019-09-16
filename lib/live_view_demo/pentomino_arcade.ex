@@ -32,7 +32,6 @@ defmodule PentominoArcade do
     
   def current_games(max_games) do
     {:ok, pid} = __MODULE__.start_link()
-    IO.puts "method: current_games"
     GenServer.call(pid, {:current_games, max_games})
   end
 

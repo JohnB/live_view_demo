@@ -19,8 +19,8 @@ defmodule LiveViewDemoWeb.Router do
     pipe_through :browser
 
     live "/", PentominoArcadeLive
-    live "/game", BoardLive
-#    live "/game/:game_id", BoardLive
+#    live "/game", BoardLive
+    live "/game/:game_id", BoardLive
   end
 
   # Other scopes may use custom stacks.

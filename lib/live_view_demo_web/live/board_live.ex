@@ -38,22 +38,13 @@ defmodule LiveViewDemoWeb.BoardLive do
     """
   end
 
-  def mount(_session, socket) do
+  def mount(session, socket) do
 #    if connected?(socket), do: :timer.send_interval(1000, self(), :tick)
 
-    board = Board.new()
-    {:ok, assign(socket, board: board, rack: board.pieces)}
+    %{"game_id" => game_id} = session.path_params
+    game = PentominoArcade.find_game(game_id)
+    {:ok, assign(socket, board: game.board, rack: game.board.pieces)}
   end
-  
-#  def handle_params(params, _uri, socket) do
-#    game = PentominoArcade.find_game(params["game_id"])
-#    IO.puts("handle_params: game=#{inspect(game)}, params=#{inspect(params)}")
-#
-#    case game do
-#      nil -> {:error, socket}
-#      game -> {:ok, assign(socket, game: game) }
-#    end
-#  end
   
 #  def handle_info(:tick, socket) do
 #    {:noreply, socket}
@@ -69,17 +60,13 @@ defmodule LiveViewDemoWeb.BoardLive do
   end
 
   def handle_event("rack-click", value, socket) do
-    IO.puts "value"
-    IO.puts value
-
     %{rack: rack, board: board} = socket.assigns
     piece_index = String.at(value, 1)
-    # piece_hash = %{piece_index => Piece.on_board(piece_index)
-    #rack = %Pieces{rack | currently_selected: piece_hash}
     
     rack = %Pieces{rack | currently_selected: piece_index}
     board = %Board{board | pieces: rack}
-    IO.puts inspect(board)
+    # TODO: show the piece on the board
+#    IO.puts inspect(board)
 
     {:noreply, assign(socket, board: board, rack: rack)}
   end

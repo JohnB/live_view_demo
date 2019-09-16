@@ -24,13 +24,9 @@ defmodule LiveViewDemoWeb.PentominoArcadeLive do
   end
 
    def handle_event("start_or_join_game", _value, socket) do
-     IO.puts "event: start_or_join_game"
-     IO.puts socket.id
-
      player_id = socket.id # use the socket as a proxy to the player (until we add proper user mgmt)
      game = PentominoArcade.start_or_join_game(player_id)
-     IO.puts inspect(game)
 
-     {:noreply, live_redirect(socket, to: Routes.live_path(socket, LiveViewDemoWeb.BoardLive, game_id: game.id))}
+     {:noreply, live_redirect(assign(socket, :game_id, game.id), to: Routes.live_path(socket, LiveViewDemoWeb.BoardLive, game.id))}
    end
 end
