@@ -1,8 +1,5 @@
 defmodule LiveViewDemoWeb.BoardLive do
   use Phoenix.LiveView
-  import Board
-  import Pieces
-  import Calendar.Strftime
 
   def render(assigns) do
     ~L"""
@@ -48,6 +45,16 @@ defmodule LiveViewDemoWeb.BoardLive do
     {:ok, assign(socket, board: board, rack: board.pieces)}
   end
   
+#  def handle_params(params, _uri, socket) do
+#    game = PentominoArcade.find_game(params["game_id"])
+#    IO.puts("handle_params: game=#{inspect(game)}, params=#{inspect(params)}")
+#
+#    case game do
+#      nil -> {:error, socket}
+#      game -> {:ok, assign(socket, game: game) }
+#    end
+#  end
+  
 #  def handle_info(:tick, socket) do
 #    {:noreply, socket}
 #  end
@@ -57,7 +64,7 @@ defmodule LiveViewDemoWeb.BoardLive do
     {:noreply, socket}
   end
 
-  def handle_event("rack-click", value = ".", socket) do
+  def handle_event("rack-click", _value = ".", socket) do
     {:noreply, socket}
   end
 

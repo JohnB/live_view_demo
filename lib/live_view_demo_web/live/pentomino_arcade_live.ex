@@ -1,19 +1,19 @@
 defmodule LiveViewDemoWeb.PentominoArcadeLive do
   use Phoenix.LiveView
-  import PentominoArcade
   alias LiveViewDemoWeb.Router.Helpers, as: Routes
 
   def render(assigns) do
     ~L"""
-      <a href="/game" >
+      <span phx-click=start_or_join_game >
         <button>
           PLAY
         </button>
-      </a >
-      
+      </span >
+      <br />
       <span class="games-container">
         <%= for game <- PentominoArcade.current_games(4) do %>
           <%= PentominoArcade.show_game(game) %>
+          <br />
         <% end %>
       </span>
     """
@@ -23,12 +23,14 @@ defmodule LiveViewDemoWeb.PentominoArcadeLive do
     {:ok, socket}
   end
 
-  # def handle_event("start_or_join_game", _value, socket) do
-  #   IO.puts "event: start_or_join_game"
-  #   IO.puts socket.id
-  #
-  #   _game = PentominoArcade.start_or_join_game()
-  #
-  #   {:noreply, live_redirect(socket, to: Routes.live_path(socket, LiveViewDemoWeb.BoardLive))}
-  # end
+   def handle_event("start_or_join_game", _value, socket) do
+     IO.puts "event: start_or_join_game"
+     IO.puts socket.id
+
+     player_id = socket.id # use the socket as a proxy to the player (until we add proper user mgmt)
+     game = PentominoArcade.start_or_join_game(player_id)
+     IO.puts inspect(game)
+
+     {:noreply, live_redirect(socket, to: Routes.live_path(socket, LiveViewDemoWeb.BoardLive, game_id: game.id))}
+   end
 end

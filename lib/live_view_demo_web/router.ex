@@ -1,5 +1,6 @@
 defmodule LiveViewDemoWeb.Router do
   use LiveViewDemoWeb, :router
+  import PentominoGame
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -19,6 +20,7 @@ defmodule LiveViewDemoWeb.Router do
 
     live "/", PentominoArcadeLive
     live "/game", BoardLive
+#    live "/game/:game_id", BoardLive
   end
 
   # Other scopes may use custom stacks.

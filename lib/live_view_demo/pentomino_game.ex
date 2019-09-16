@@ -5,17 +5,20 @@ defmodule PentominoGame do
 
   defstruct [:id, :players, :game_board]
 
-  def new() do
+  def new(player_id) do
     %__MODULE__{
-      id: :rand.uniform(987654), # TODO: a better ID, such as one from Ecto
-      players: [],
+      id: "#{:rand.uniform(999999)}", # TODO: a better ID, such as one from Ecto
+      players: [player_id],
       game_board: []
     }
   end
   
-  def needs_player?(%PentominoGame{}) do
-    IO.puts "method: show_game"
-    false
+  def add_player(state = %PentominoGame{players: players}, player_id) do
+    %{state | players: players ++ [player_id]}
+  end
+  
+  def needs_player?(%PentominoGame{players: players}) do
+    Enum.count(players) < 4
   end
 
 end
