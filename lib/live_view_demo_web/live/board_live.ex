@@ -45,7 +45,7 @@ defmodule LiveViewDemoWeb.BoardLive do
     game = PentominoArcade.find_game(game_id)
     case game do
       nil -> {:ok, socket} # TODO: figure out the correct action here
-      _ -> {:ok, assign(socket, board: game.board, rack: game.board.pieces)}
+      _ -> {:ok, assign(socket, board: game.board, rack: Pieces.new())}
     end
   end
   
@@ -67,7 +67,7 @@ defmodule LiveViewDemoWeb.BoardLive do
     piece_index = String.at(value, 1)
     
     rack = %Pieces{rack | currently_selected: piece_index}
-    board = %Board{board | pieces: rack}
+
     # TODO: show the piece on the board
 #    IO.puts inspect(board)
 

@@ -37,7 +37,7 @@
     border: 1px solid black;
     float: left;
     margin-right: 1em;
-    background-color: #f0f0f0;
+    background-color: #f8f8f8;
 }
 
 .board span {
@@ -80,9 +80,9 @@
 }
 
 .red { background-color: red }
-.green { background-color: green }
+.green { background-color: #00ee05 }
 .blue { background-color: blue }
-.yellow { background-color: yellow }
+.yellow { background-color: #ffdd00 }
 .purple { background-color: light-purple }
 .orange { background-color: orange }
 .white { background-color: white }

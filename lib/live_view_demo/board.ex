@@ -5,7 +5,8 @@ defmodule Board do
   Encapsulate the board position structure, which informs the BoardLive
   UI component.
 """
-  defstruct [:board_squares, :width, :height, :start_squares, :pieces]
+  defstruct [:board_squares, :width, :height, :start_squares]
+  @player_colors ["blue", "green", "yellow", "red"]
 
   def new( width \\ default_width(), height \\ default_height(), _start_style \\ :corners) do
     # Randomize our start squares w/in the corner quadrant
@@ -20,10 +21,10 @@ defmodule Board do
       width: width,
       height: height,
       start_squares: %{
-        top_left => "blue",
-        top_right => "green",
-        bot_right => "yellow",
-        bot_left => "red"
+        top_left => Enum.at(@player_colors, 0),
+        top_right => Enum.at(@player_colors, 1),
+        bot_right => Enum.at(@player_colors, 2),
+        bot_left => Enum.at(@player_colors, 3)
       },
       board_squares:
         Enum.reduce( 1..(width * height), %{},
@@ -35,8 +36,7 @@ defmodule Board do
             }
           )
           end
-        ),
-      pieces: Pieces.new
+        )
     }
   end
   
