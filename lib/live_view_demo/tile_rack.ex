@@ -72,7 +72,7 @@ defmodule TileRack do
     }
   end
   
-  # TODO: refactor the duplication here - maybe just take the square_index as a param
+  # TODO: enhance this method or get rid of it
   def click(%TileRack{ raw_chars: raw_chars, width: width}, x, y) do
     ~s(phx-click=rack-click)
   end

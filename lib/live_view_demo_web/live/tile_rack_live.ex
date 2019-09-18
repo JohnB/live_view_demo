@@ -13,6 +13,15 @@ defmodule LiveViewDemoWeb.TileRackLive do
             ></a>
           <% end %>
         <% end %>
+        <span class="rack-controls">
+          <image src="/images/rotate_left.png" phx-click="rotate-left" />
+          <image src="/images/top_to_bottom_flip.png" phx-click="flip-top" />
+          <image src="/images/side_to_side_flip.png" phx-click="flip-side" />
+          <image src="/images/rotate_right.png" phx-click="rotate-right" />
+          <button disabled>
+            OK
+          </button>
+        </span>
       </span>
     """
   end
@@ -36,8 +45,25 @@ defmodule LiveViewDemoWeb.TileRackLive do
     {:noreply, assign(socket, rack: rack)}
   end
 
+  def handle_event("rotate-left", _value, socket) do
+    IO.puts("handle_event(rotate-left)")
+    {:noreply, socket}
+  end
+  def handle_event("rotate-right", _value, socket) do
+    IO.puts("handle_event(rotate-right)")
+    {:noreply, socket}
+  end
+  def handle_event("flip-top", _value, socket) do
+    IO.puts("handle_event(flip-top)")
+    {:noreply, socket}
+  end
+  def handle_event("flip-side", _value, socket) do
+    IO.puts("handle_event(flip-side)")
+    {:noreply, socket}
+  end
+
   def handle_event(event, value, socket) do
-    IO.puts("DEFAULT TileRackLive handle_event(#{event}, #{value}...).")
+    IO.puts("DEFAULT TileRackLive handle_event??(#{event}, #{value}...).")
     {:noreply, socket}
   end
 end
