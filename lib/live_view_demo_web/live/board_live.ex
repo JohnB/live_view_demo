@@ -24,15 +24,24 @@ defmodule LiveViewDemoWeb.BoardLive do
       </span>
 
       <span class="rack-container">
-        <%= for y <- Pieces.row_ids(@rack) do %>
-          <%= for x <- Pieces.column_ids(@rack) do %>
+        <%= for y <- TileRack.row_ids(@rack) do %>
+          <%= for x <- TileRack.column_ids(@rack) do %>
             <a href="#"
-              <%= Pieces.click(@rack, x, y) %>
-              <%= Pieces.value(@rack, x, y) %>
-              class="<%= Pieces.square_class(@rack, x, y) %>"
+              <%= TileRack.click(@rack, x, y) %>
+              <%= TileRack.value(@rack, x, y) %>
+              class="<%= TileRack.square_class(@rack, x, y) %>"
             ></a>
           <% end %>
         <% end %>
+        <span class="rack-controls">
+          <image src="/images/rotate_left.png" />
+          <image src="/images/top_to_bottom_flip.png" />
+          <image src="/images/side_to_side_flip.png" />
+          <image src="/images/rotate_right.png" />
+          <button disabled>
+            MOVE
+          </button>
+        </span>
       </span>
 
     """
@@ -45,7 +54,7 @@ defmodule LiveViewDemoWeb.BoardLive do
     game = PentominoArcade.find_game(game_id)
     case game do
       nil -> {:ok, socket} # TODO: figure out the correct action here
-      _ -> {:ok, assign(socket, board: game.board, rack: Pieces.new())}
+      _ -> {:ok, assign(socket, board: game.board, rack: TileRack.new())}
     end
   end
   
@@ -66,7 +75,7 @@ defmodule LiveViewDemoWeb.BoardLive do
     %{rack: rack, board: board} = socket.assigns
     piece_index = String.at(value, 1)
     
-    rack = %Pieces{rack | currently_selected: piece_index}
+    rack = %TileRack{rack | currently_selected: piece_index}
 
     # TODO: show the piece on the board
 #    IO.puts inspect(board)
