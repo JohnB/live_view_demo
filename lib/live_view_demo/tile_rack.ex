@@ -1,4 +1,4 @@
-defmodule Pieces do
+defmodule TileRack do
   @moduledoc """
   Encapsulate the shape of each piece, initially in the player's rack
   then later on the board.
@@ -72,12 +72,12 @@ defmodule Pieces do
     }
   end
   
-  # TODO: refactor the duplication here - maybe just take the square_index as a param
-  def click(%Pieces{ raw_chars: raw_chars, width: width}, x, y) do
+  # TODO: enhance this method or get rid of it
+  def click(%TileRack{ raw_chars: raw_chars, width: width}, x, y) do
     ~s(phx-click=rack-click)
   end
 
-  def value(%Pieces{ raw_chars: raw_chars, width: width}, x, y) do
+  def value(%TileRack{ raw_chars: raw_chars, width: width}, x, y) do
     square_index = x + y * width
     case Enum.at(raw_chars, square_index) do
       nil -> ~s(phx-value=".")
@@ -87,7 +87,7 @@ defmodule Pieces do
 
   # Return the CSS class(es) that should be applied to this square.
   # Simple case: the default rack.
-  def square_class(%Pieces{ raw_chars: raw_chars,
+  def square_class(%TileRack{ raw_chars: raw_chars,
                             on_board: %{},
                             currently_selected: nil,
                             width: width
@@ -101,7 +101,7 @@ defmodule Pieces do
   end
   # Return the CSS class(es) that should be applied to this square.
   # Less simple case: something selected, but nothing on board.
-  def square_class(%Pieces{ raw_chars: raw_chars,
+  def square_class(%TileRack{ raw_chars: raw_chars,
                             on_board: %{},
                             currently_selected: currently_selected,
                             width: width
