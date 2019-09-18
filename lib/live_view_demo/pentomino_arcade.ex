@@ -2,14 +2,14 @@ defmodule PentominoArcade do
   use GenServer
 
   @moduledoc """
-  Manage all the pentomino games.
+  Manage all the pentomino games in a GenServer.
+  
+  Keep track of all the games and users.
+  Games will track the board, the players, and the
+  player's tile racks.
 """
 
-  defstruct [:games]
-
-  def show_game(game) do
-    " show_game(#{game.id}) " # TODO: display the board
-  end
+  defstruct [:games, :user_ids, :tile_racks]
 
   # Client
   
@@ -37,10 +37,10 @@ defmodule PentominoArcade do
 
   # Server
   def init(_init_arg) do
-    {:ok, %{
+    {:ok, %__MODULE__{
       games: [],
       user_ids: [],
-      reset_at: Time.utc_now
+      tile_racks: []
     }}
   end
   

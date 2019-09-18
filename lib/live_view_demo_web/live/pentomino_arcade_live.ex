@@ -9,9 +9,9 @@ defmodule LiveViewDemoWeb.PentominoArcadeLive do
           NEW GAME
         </button>
       </span >
-      <h2>Games in Progress</h2>
+      <h2>Game in Progress</h2>
       <span class="games-container">
-        <%= for game <- PentominoArcade.current_games(4) do %>
+        <%= for game <- PentominoArcade.current_games(1) do %>
           <%= live_render(@socket, LiveViewDemoWeb.BoardLive, session: %{path_params: %{game_id: game.id}}) %>
           <br />
         <% end %>

@@ -37,6 +37,7 @@ defmodule LiveViewDemoWeb.BoardLive do
 
   def handle_event("click", value, socket) do
     IO.puts("Board clicked at position #{value}.")
+#    PentominoGame.move_held_piece_to(game_id, value)
     {:noreply, socket}
   end
 

@@ -14,11 +14,11 @@ defmodule LiveViewDemoWeb.TileRackLive do
           <% end %>
         <% end %>
         <span class="rack-controls">
-          <image src="/images/rotate_left.png" phx-click="rotate-left" />
+          <image src="/images/rotate_left.png"        phx-click="rotate-left" />
           <image src="/images/top_to_bottom_flip.png" phx-click="flip-top" />
-          <image src="/images/side_to_side_flip.png" phx-click="flip-side" />
-          <image src="/images/rotate_right.png" phx-click="rotate-right" />
-          <button disabled>
+          <image src="/images/side_to_side_flip.png"  phx-click="flip-side" />
+          <image src="/images/rotate_right.png"       phx-click="rotate-right" />
+          <button phx-click="finish-move">
             OK
           </button>
         </span>
@@ -41,24 +41,34 @@ defmodule LiveViewDemoWeb.TileRackLive do
     rack = %TileRack{rack | currently_selected: piece_index}
 
     # TODO: show the piece on the board
+    #PentominoGame.pick_up_piece(game_id, player_id, piece_id, rack_squares)
 
     {:noreply, assign(socket, rack: rack)}
   end
 
   def handle_event("rotate-left", _value, socket) do
     IO.puts("handle_event(rotate-left)")
+#    PentominoGame.rotate_left_held_piece(game_id, player_id)
     {:noreply, socket}
   end
   def handle_event("rotate-right", _value, socket) do
     IO.puts("handle_event(rotate-right)")
+#    PentominoGame.rotate_right_held_piece(game_id, player_id)
     {:noreply, socket}
   end
   def handle_event("flip-top", _value, socket) do
     IO.puts("handle_event(flip-top)")
+#    PentominoGame.vertical_flip_held_piece(game_id, player_id)
     {:noreply, socket}
   end
   def handle_event("flip-side", _value, socket) do
     IO.puts("handle_event(flip-side)")
+#    PentominoGame.horizontal_flip_held_piece(game_id, player_id)
+    {:noreply, socket}
+  end
+  def handle_event("finish-move", _value, socket) do
+    IO.puts("handle_event(finish-move)")
+#    PentominoGame.finish_move(game_id, player_id)
     {:noreply, socket}
   end
 
