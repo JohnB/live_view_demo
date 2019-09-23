@@ -44,7 +44,7 @@ defmodule Board do
     Enum.random([18,19,21,22])
   end
   def default_height() do
-    Enum.random([18,19,21,22])
+    20 # consistent height looks better on mobile than Enum.random([18,19,21,22])
   end
   
   # Return the CSS class(es) that should be applied to this square.

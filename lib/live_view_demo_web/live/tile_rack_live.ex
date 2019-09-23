@@ -27,7 +27,13 @@ defmodule LiveViewDemoWeb.TileRackLive do
   end
 
   def mount(session, socket) do
-    {:ok, assign(socket, rack: TileRack.new())}
+    player_id = socket.id # use the socket as a proxy to the player (until we add proper user mgmt)
+    
+    # How do we get here without the path_params having been set?
+    case get_in(session, [:path_params, :game_id]) do
+      nil -> {:ok, assign(socket, rack: TileRack.new(), game_id: 8675309, player_id: player_id)}
+      game_id -> {:ok, assign(socket, rack: TileRack.new(), game_id: game_id, player_id: player_id)}
+    end
   end
   
   def handle_event("rack-click", _value = ".", socket) do
@@ -35,13 +41,13 @@ defmodule LiveViewDemoWeb.TileRackLive do
   end
 
   def handle_event("rack-click", value, socket) do
-    %{rack: rack} = socket.assigns
+    %{rack: rack, game_id: game_id, player_id: player_id} = socket.assigns
     piece_index = String.at(value, 1)
     
     rack = %TileRack{rack | currently_selected: piece_index}
 
-    # TODO: show the piece on the board
-    #PentominoGame.pick_up_piece(game_id, player_id, piece_id, rack_squares)
+    rack_squares = [25, 26, 27]
+    PentominoGame.pick_up_piece(game_id, player_id, piece_index, rack_squares)
 
     {:noreply, assign(socket, rack: rack)}
   end

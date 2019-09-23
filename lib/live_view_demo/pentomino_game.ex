@@ -23,9 +23,15 @@ defmodule PentominoGame do
 
   def pick_up_piece(game_id, player_id, piece_id, rack_squares) do
     # Find the game in the arcade
+#    game = PentominoArcade.find_game(game_id)
+#    case game do
+#      nil -> {:ok, assign(socket, board: Board.new(), rack: Pieces.new())} # TODO: figure out the correct action here
+#      _ -> {:ok, assign(socket, board: game.board, rack: TileRack.new())}
+#    end
+
     # Build a held_piece struct with player's color, piece_on_5x5_grid, etc.
-    # Pick a random board location
-    # move_held_piece_to(location)
+#    held_piece = HeldPiece.new(player_id, "green", piece_id, rack_squares)
+#    move_held_piece_to(held_piece, List.first(rack_squares))
   end
 
   def move_held_piece_to(game_id, location) do

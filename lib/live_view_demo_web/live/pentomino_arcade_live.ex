@@ -20,11 +20,11 @@ defmodule LiveViewDemoWeb.PentominoArcadeLive do
   end
 
   def mount(_session, socket) do
-    {:ok, socket}
+    {:ok, assign(socket, player_id: socket.id)} # use the socket as a proxy to the player (until we add proper user mgmt)
   end
 
    def handle_event("start_or_join_game", _value, socket) do
-     player_id = socket.id # use the socket as a proxy to the player (until we add proper user mgmt)
+    %{player_id: player_id} = socket.assigns
      game = PentominoArcade.start_or_join_game(player_id)
 
      dest = Routes.game_path(socket, :play, game.id)
