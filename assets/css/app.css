@@ -55,6 +55,16 @@
     border: 0px;
 }
 
+.piece-in-hand {
+    background: url(/images/piece_in_hand.png);
+}
+
+.piece-in-opponent-hand {
+    background: url(/images/piece_in_hand.png);
+    transform: rotate(90deg);
+    opacity: 0.3;
+}
+
 .rack {
     width: 78px;
     border: 1px solid black;
