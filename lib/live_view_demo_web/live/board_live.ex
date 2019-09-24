@@ -27,17 +27,18 @@ defmodule LiveViewDemoWeb.BoardLive do
   end
 
   def mount(session, socket) do
-    game_id = Map.get(session.path_params, :game_id)
+    game_id = Map.get(session, :game_id)
     game = PentominoArcade.find_game(game_id)
     case game do
-      nil -> {:ok, assign(socket, board: Board.new(), rack: Pieces.new())} # TODO: figure out the correct action here
-      _ -> {:ok, assign(socket, board: game.board, rack: TileRack.new())}
+      nil -> {:ok, assign(socket, game_id: game_id, board: Board.new(), rack: TileRack.new())} # TODO: figure out the correct action here
+      _ -> {:ok, assign(socket, game_id: game_id, board: game.board, rack: TileRack.new())}
     end
   end
 
   def handle_event("click", value, socket) do
-    IO.puts("Board clicked at position #{value}.")
-#    PentominoGame.move_held_piece_to(game_id, value)
+    %{game_id: game_id} = socket.assigns
+    player_id = socket.id
+    PentominoGame.move_held_piece_to(game_id, player_id, value)
     {:noreply, socket}
   end
 

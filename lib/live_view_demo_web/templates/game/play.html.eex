@@ -1,3 +1,3 @@
 <%= @game_id %>
-<%= live_render(@conn, LiveViewDemoWeb.BoardLive, session: %{path_params: %{game_id: @game_id}}) %>
-<%= live_render(@conn, LiveViewDemoWeb.TileRackLive, session: %{}) %>
+<%= live_render(@conn, LiveViewDemoWeb.BoardLive, session: %{game_id: @game_id}) %>
+<%= live_render(@conn, LiveViewDemoWeb.TileRackLive, session: %{game_id: @game_id}) %>

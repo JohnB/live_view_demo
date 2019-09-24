@@ -3,13 +3,14 @@ defmodule PentominoGame do
   Manage one pentomino game.
 """
 
-  defstruct [:id, :players, :board]
+  defstruct [:id, :players, :board, :holding]
 
   def new(player_id) do
     %__MODULE__{
       id: "#{:rand.uniform(999999)}", # TODO: a better ID, such as one from Ecto
       players: [player_id],
-      board: Board.new()
+      board: Board.new(),
+      holding: %{}
     }
   end
   
@@ -22,6 +23,7 @@ defmodule PentominoGame do
   end
 
   def pick_up_piece(game_id, player_id, piece_id, rack_squares) do
+    IO.puts("pick_up_piece(#{game_id}, #{player_id}, #{piece_id}, #{rack_squares})")
     # Find the game in the arcade
 #    game = PentominoArcade.find_game(game_id)
 #    case game do
@@ -34,7 +36,8 @@ defmodule PentominoGame do
 #    move_held_piece_to(held_piece, List.first(rack_squares))
   end
 
-  def move_held_piece_to(game_id, location) do
+  def move_held_piece_to(game_id, player_id, location) do
+    IO.puts("Board clicked at position #{location} by #{player_id}.")
     # Find the game in the arcade
     # Translate the grid to the location
     # Fix the board code to show the held picee
