@@ -25,15 +25,16 @@ defmodule PentominoGame do
   def pick_up_piece(game_id, player_id, piece_id, rack_squares) do
     IO.puts("pick_up_piece(#{game_id}, #{player_id}, #{piece_id}, #{rack_squares})")
     # Find the game in the arcade
-#    game = PentominoArcade.find_game(game_id)
-#    case game do
-#      nil -> {:ok, assign(socket, board: Board.new(), rack: Pieces.new())} # TODO: figure out the correct action here
-#      _ -> {:ok, assign(socket, board: game.board, rack: TileRack.new())}
-#    end
+    game = PentominoArcade.find_game(game_id)
+    IO.puts(inspect(game))
 
-    # Build a held_piece struct with player's color, piece_on_5x5_grid, etc.
-#    held_piece = HeldPiece.new(player_id, "green", piece_id, rack_squares)
-#    move_held_piece_to(held_piece, List.first(rack_squares))
+    # TODO: consider switching to held_piece struct
+    game = put_in(game.holding[player_id], rack_squares)
+    # TODO: apply rack_squares directly to the board.
+     #games = Enum.map(games, fn g -> case {g.id, game_id} do {a, a} -> game ; _ -> g end end)
+    
+    IO.puts(inspect(game))
+    game = PentominoArcade.update_game(game)
   end
 
   def move_held_piece_to(game_id, player_id, location) do

@@ -30,6 +30,12 @@ defmodule PentominoArcade do
     GenServer.call(pid, {:find_game, game_id})
   end
     
+  def update_game(game) do
+    {:ok, pid} = __MODULE__.start_link()
+     IO.puts "calling :update_game with #{inspect(game)}."
+    GenServer.call(pid, {:update_game, game})
+  end
+    
   def current_games(max_games) do
     {:ok, pid} = __MODULE__.start_link()
     GenServer.call(pid, {:current_games, max_games})
@@ -55,6 +61,14 @@ defmodule PentominoArcade do
     selected_game = Enum.find(state.games, fn g -> g.id == game_id end)
      IO.puts "Found game #{game_id}: #{inspect(selected_game)}"
     {:reply, selected_game, state}
+  end
+  
+  def handle_call({:update_game, %PentominoGame{id: game_id} = game}, _, state = %{games: games}) do
+#    selected_game = Enum.find(state.games, fn g -> g.id == game_id end)
+     IO.puts "Updating game #{game_id}."
+     games = Enum.map(games, fn g -> case {g.id, game_id} do {a, a} -> game ; _ -> g end end)
+     IO.puts "Updated games #{game_id}: #{inspect(games)}"
+    {:reply, game, %{state | games: games}}
   end
   
   def handle_call({:current_games, max_games}, _, state) do
