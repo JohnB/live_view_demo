@@ -10,7 +10,7 @@ defmodule PentominoGame do
       id: "#{:rand.uniform(999999)}", # TODO: a better ID, such as one from Ecto
       players: [player_id],
       board: Board.new(),
-      holding: %{}
+      holding: []
     }
   end
   
@@ -28,13 +28,16 @@ defmodule PentominoGame do
     game = PentominoArcade.find_game(game_id)
     IO.puts(inspect(game))
 
-    # TODO: consider switching to held_piece struct
-    game = put_in(game.holding[player_id], rack_squares)
-    # TODO: apply rack_squares directly to the board.
-     #games = Enum.map(games, fn g -> case {g.id, game_id} do {a, a} -> game ; _ -> g end end)
+    # rack_squares here is a set of 0..25 positions in a 5x5 grid
+    # BUG: we only hold one piece at a time regardless of the number of players
+    game = %{game | holding: rack_squares}
     
+    position_on_board = 47 # random spot
+    board = Board.show_on_board(game.board, rack_squares, position_on_board, "red piece-in-hand")
+    IO.puts(inspect(board))
+    game = %{game | board: board}
     IO.puts(inspect(game))
-    game = PentominoArcade.update_game(game)
+#    PentominoArcade.update_game(game, board)
   end
 
   def move_held_piece_to(game_id, player_id, location) do

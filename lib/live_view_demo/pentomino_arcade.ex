@@ -58,8 +58,12 @@ defmodule PentominoArcade do
   end
   
   def handle_call({:find_game, game_id}, _, state) do
+    IO.puts("\nstate.games #{inspect(state.games)}\n")
     selected_game = Enum.find(state.games, fn g -> g.id == game_id end)
-     IO.puts "Found game #{game_id}: #{inspect(selected_game)}"
+    case game_id do
+      nil -> IO.puts("Can't find nil in #{inspect(state.games)}")
+      _ -> IO.puts("Found game #{game_id}: #{inspect(selected_game)}")
+    end
     {:reply, selected_game, state}
   end
   

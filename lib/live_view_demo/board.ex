@@ -50,8 +50,41 @@ defmodule Board do
   # Return the CSS class(es) that should be applied to this square.
   def square_class(%__MODULE__{start_squares: start_squares, board_squares: board_squares}, square_index) do
     case start_squares[square_index] do
-      nil -> [board_squares[square_index].base]
+      nil -> ["#{board_squares[square_index].base} #{board_squares[square_index].overlay}"]
       color -> [color]
     end
+  end
+  
+  def show_on_board(board, five_squares, position, class) do
+    five_squares = smear(five_squares, board.width)
+      |> Enum.map(fn n -> n + position end)
+    updated_squares = board.board_squares
+      |> Enum.map(fn {k, v} ->
+        case Enum.member?(five_squares, k) do
+          true -> {k, %{v | overlay: class}}
+          _ -> {k, v}
+        end end)
+    %{board | board_squares: updated_squares}
+  end
+  
+  # shift these squares to the upper left of a grid of src_width to a grid of dest_width
+  def smear(squares, width) do
+    Enum.map(squares, fn n -> Integer.mod(n, 5) + width * Integer.floor_div(n, 5) end)
+  end
+  
+  # shift these squares to the upper left of a grid of src_width to a grid of dest_width
+  def snug(squares, src_width \\ 5, dest_width \\ 5) do
+    IO.puts(inspect(squares))
+    min_x = squares
+      |> Enum.map(fn position -> Integer.mod(position, src_width) end)
+      |> Enum.min()
+    min_y = squares
+      |> Enum.map(fn position -> Integer.floor_div(position, src_width) end)
+      |> Enum.min()
+    shifted_left = Enum.map(squares, fn position -> position - min_x end)
+    Enum.map(shifted_left, fn position ->
+      Integer.mod(position, src_width) +
+      (Integer.floor_div(position, src_width) - min_y) * dest_width
+    end)
   end
 end

@@ -45,7 +45,7 @@ defmodule LiveViewDemoWeb.TileRackLive do
     
     rack = %TileRack{rack | currently_selected: piece_index}
 
-    rack_squares = rack.rack_squares[piece_index]
+    rack_squares = rack.rack_squares[piece_index] |> Board.snug(rack.width)
     PentominoGame.pick_up_piece(game_id, player_id, piece_index, rack_squares)
 
     {:noreply, assign(socket, rack: rack)}
